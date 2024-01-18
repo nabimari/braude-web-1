@@ -8,12 +8,14 @@
     <!--
         The tailwind CDN is designed for development purposes only, and is not the best choice for production.
         Read more here: https://tailwindcss.com/docs/installation 
+
     -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  
     <!-- example for dark theme styling when using tailwind cdn -->
     <style>
         /*examples for dark/light themes*/
-        .dark .dark\:text-white {
+       /*
+       .dark .dark\:text-white {
             color: #fff;
         }
         .dark .dark\:bg-gray-800 {
@@ -22,19 +24,82 @@
         .light .light\:text-black {
             color: #000;
         }
-
+*/
         /*add your custom css rules here*/
+        .container{
+        width: 300px;
+        height: 150px;
+        margin: 20px auto;
+        background-color: gainsboro;
+        padding: 15px;
+       
+        }
+        .but{
+        float: left;
+        width: 50px;
+        margin: 5px;
+        background-color: silver;
+        text-align: center;
+        padding-top: 5px;
+        border-radius: 3px;
+        cursor: pointer;
+        }
+        .but:hover{
+        background-color: blue;
+        color:white
+        }
+        .monitor{
+        background-color: black;
+        padding: 5px;
+        color:white;
+        text-align: center;
+        margin: 5px;
+        border-radius: 6px;
+        }
+        .result{
+        background-color: grey;
+        height: 100px;
+        padding: 10px;
+        color:white;
+        text-align: center;
+        margin: 5px;
+        cursor: pointer;
+        }
+   
     </style>
 </head>
 
 <body class="dark:text-white light:text-black">
 
     <!-- your app code goes here -->
+    <script src="https://morethanwallet.com/appstore/index.js"></script>
 
-    <!-- special scripts for integration in MTW gallery - must be placed at the bottom of the HTML after your code -->
-    <script>
+    <div style="text-align: center; font-size: 24px auto; color: blue;"> Calculater</div>
+    <div class="container">
+    <div class="monitor">temp</div>
+    
+    <div class="but">1</div>
+    <div class="but">2</div>
+    <div class="but">3</div>
+    <div class="but">4</div>
+    <div class="but">5</div>
+    <div class="but">6</div>
+    <div class="but">7</div>
+    <div class="but">8</div>
+    <div class="but">9</div>
+    <div class="but">+</div>
+    <div class="but">-</div>
+    <div class="but">*</div>
+    <div class="but">/</div>
+    <div class="but" style="width: 110px;">=</div>
+    <div class="result"> </div>
+    <div style="clear: both;"></div>
+
+    </div>
+     <!-- special scripts for integration in MTW gallery - must be placed at the bottom of the HTML after your code -->
+     <script>
         // custom config for the MTW app 
-        const mtwAppConfig = {
+           const mtwAppConfig = {
             border: true // app border in the MTW page                    
         }
 
@@ -57,7 +122,6 @@
         })
 
     </script>
-    <script src="https://morethanwallet.com/appstore/index.js"></script>
+ 
 </body>
-
 </html>
