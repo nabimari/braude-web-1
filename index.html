@@ -1,127 +1,275 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTW App Template</title>
-    <!--
-        The tailwind CDN is designed for development purposes only, and is not the best choice for production.
-        Read more here: https://tailwindcss.com/docs/installation 
-
-    -->
-  
-    <!-- example for dark theme styling when using tailwind cdn -->
+    <title>Calculator</title>
     <style>
-        /*examples for dark/light themes*/
-       /*
-       .dark .dark\:text-white {
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #06503d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        #calculator {
+            background-color: #070608;
+            border: 1px solid #040505;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        #display {
+            width: 750px;
+            height: 70px;
+            font-size: 24px;
+            border: none;
+            text-align: right;
+            padding: 0 10px;
+            outline: none;
+            background-color: #eee9e9;
+            border-bottom: 1px solid #070505;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .button {
+            flex: 1;
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border: 1px solid #acb9b5;
+            border-radius: 5px;
+            background-color: #9e9393;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button.operator {
+            background-color: #0b7c64;
+            color: #080505;
+        }
+
+        .button.equal {
+            background-color: #0b7c64;
             color: #fff;
         }
-        .dark .dark\:bg-gray-800 {
-            background-color: #1f2937;
+
+        .button.clear {
+            background-color: #d9534f;
+            color: #050101;
         }
-        .light .light\:text-black {
-            color: #000;
+
+        .button:hover {
+            background-color: #fdfbff;
         }
-*/
-        /*add your custom css rules here*/
-        .container{
-        width: 300px;
-        height: 150px;
-        margin: 20px auto;
-        background-color: gainsboro;
-        padding: 15px;
-       
-        }
-        .but{
-        float: left;
-        width: 50px;
-        margin: 5px;
-        background-color: silver;
-        text-align: center;
-        padding-top: 5px;
-        border-radius: 3px;
-        cursor: pointer;
-        }
-        .but:hover{
-        background-color: blue;
-        color:white
-        }
-        .monitor{
-        background-color: black;
-        padding: 5px;
-        color:white;
-        text-align: center;
-        margin: 5px;
-        border-radius: 6px;
-        }
-        .result{
-        background-color: grey;
-        height: 100px;
-        padding: 10px;
-        color:white;
-        text-align: center;
-        margin: 5px;
-        cursor: pointer;
-        }
-   
     </style>
 </head>
-
-<body class="dark:text-white light:text-black">
-
-    <!-- your app code goes here -->
-    <script src="https://morethanwallet.com/appstore/index.js"></script>
-
-    <div style="text-align: center; font-size: 24px auto; color: blue;"> Calculater</div>
-    <div class="container">
-    <div class="monitor">temp</div>
-    
-    <div class="but">1</div>
-    <div class="but">2</div>
-    <div class="but">3</div>
-    <div class="but">4</div>
-    <div class="but">5</div>
-    <div class="but">6</div>
-    <div class="but">7</div>
-    <div class="but">8</div>
-    <div class="but">9</div>
-    <div class="but">+</div>
-    <div class="but">-</div>
-    <div class="but">*</div>
-    <div class="but">/</div>
-    <div class="but" style="width: 110px;">=</div>
-    <div class="result"> </div>
-    <div style="clear: both;"></div>
-
+<body>
+    <div id="calculator">
+        <input type="text" id="display" readonly>
+        <div class="row">
+            <button class="button operator">Mc</button>
+            <button class="button operator">Mr</button>
+            <button class="button operator">M+</button>
+            <button class="button operator">M-</button>
+            <button class="button operator">Ms</button>
+            <button class="button operator">M&#8314;</button>
+        </div>
+        <div class="row">
+            <button class="button operator operator">2nd</button>
+            <button class="button operator operator">&pi;</button>
+            <button class="button operator operator">e</button>
+            <button class="button operator operator" onclick="clearDisplay()">C</button>
+            <button class="button operator operator" onclick="backspace()">&#9003;</button>
+        </div>
+        <div class="row">
+            <button class="button operator" onclick="square()">x&#178;</button>
+            <button class="button operator" onclick="inverse()">1/x</button>
+            <button class="button operator" onclick="absolute()">|x|</button>
+            <button class="button operator" onclick="exponential()">exp</button>
+            <button class="button operator" onclick="modulo()">mod</button>
+            
+        </div>
+        <div class="row">
+            <button class="button operator" onclick="squareRoot()">&#178;&#8730;x</button>
+            <button class="button operator" onclick="appendToDisplay('(')">(</button>
+            <button class="button operator" onclick="appendToDisplay(')')">)</button>
+            <button class="button operator" onclick="factorial()">n!</button>
+            <button class="button operator" onclick="setOperator('/')">/</button>
+        </div>
+        <div class="row">
+            <button class="button operator" onclick="power()">x<sup>y</sup></button>
+            <button class="button" onclick="appendToDisplay('7')">7</button>
+            <button class="button" onclick="appendToDisplay('8')">8</button>
+            <button class="button" onclick="appendToDisplay('9')">9</button>
+            <button class="button operator" onclick="setOperator('*')">*</button>
+        </div>
+        <div class="row">
+            <button class="button operator" onclick="powerTen()">10<sup>x</sup></button>
+            <button class="button" onclick="appendToDisplay('4')">4</button>
+            <button class="button" onclick="appendToDisplay('5')">5</button>
+            <button class="button" onclick="appendToDisplay('6')">6</button>
+            <button class="button operator" onclick="setOperator('-')">-</button>
+        </div>
+        <div class="row">
+            <button class="button operator" onclick="logarithm()">log</button>
+            <button class="button" onclick="appendToDisplay('1')">1</button>
+            <button class="button" onclick="appendToDisplay('2')">2</button>
+            <button class="button" onclick="appendToDisplay('3')">3</button>
+            <button class="button operator" onclick="setOperator('+')">+</button>
+        </div>
+        <div class="row">
+            <button class="button operator" onclick="naturalLogarithm()">ln</button>
+            <button class="button operator" onclick="toggleSign()">+/-</button>
+            <button class="button" onclick="appendToDisplay('0')">0</button>
+            <button class="button" onclick="appendToDisplay('.')">.</button>
+            <button class="button equal" onclick="calculate()">=</button>
+        </div>
     </div>
-     <!-- special scripts for integration in MTW gallery - must be placed at the bottom of the HTML after your code -->
-     <script>
-        // custom config for the MTW app 
-           const mtwAppConfig = {
-            border: true // app border in the MTW page                    
+
+    <script>
+        // JavaScript for calculator functionality
+        let currentInput = '';
+        let currentOperator = '';
+        let resultDisplayed = false;
+        let flag=0;
+        function appendToDisplay(value) {
+            if (resultDisplayed) {
+                document.getElementById('display').value = '';
+                resultDisplayed = false;
+            }
+            currentInput+= value;
+            document.getElementById('display').value = currentInput;
         }
 
-        ///////////////////////////////////////////////////////
-        // implement this functions in order to use private API        
-        const sendPrivateApiRequest = async () => {
-            // your code here:
-            // sendRequestToParent({ cat: 'getAssets' })
-        }        
-
-        const acceptPrivateApiResponse = async (data) => {
-            // process received data here:
-            // console.log(data)
+        function setOperator(operator) {
+            if (currentInput !== '') {
+                currentOperator = operator;
+                currentInput += operator;
+                document.getElementById('display').value = currentInput;
+            }
         }
 
-        // use this in order to send on document load
-        document.addEventListener('DOMContentLoaded', () => {
-            // your code here:
-            //sendRequestToParent({ method: 'getAssets' })
-        })
+        function calculate() {
+            if (currentInput !== '') {
+                try {
+                    currentInput = eval(currentInput).toString();
+                    document.getElementById('display').value = currentInput;
+                    resultDisplayed = true;
+                } catch (error) {
+                    document.getElementById('display').value = 'Error';
+                    currentInput = '';
+                    currentOperator = '';
+                }
+            }
+        }
 
+        function clearDisplay() {
+            currentInput = '';
+            currentOperator = '';
+            document.getElementById('display').value = '';
+        }
+
+        function backspace() {
+            if (currentInput !== '') {
+                currentInput = currentInput.slice(0, -1);
+                document.getElementById('display').value = currentInput;
+            }
+        }
+
+        function square() {
+            currentInput = Math.pow(parseFloat(currentInput), 2).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function inverse() {
+            currentInput = (1 / parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function absolute() {
+            currentInput = Math.abs(parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function exponential() {
+            currentInput = Math.exp(parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function modulo() {
+            currentOperator = '%';
+            currentInput += currentOperator;
+            document.getElementById('display').value = currentInput;
+        }
+
+        function squareRoot() {
+            currentInput = Math.sqrt(parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function power() {
+            currentOperator = '**';
+            currentInput += currentOperator;
+            document.getElementById('display').value = currentInput;
+        }
+
+        function powerTen() {
+            currentInput = Math.pow(10, parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function logarithm() {
+            currentInput = Math.log10(parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function factorial() {
+            const num = parseInt(currentInput);
+            if (num >= 0) {
+                currentInput = factorialHelper(num).toString();
+                document.getElementById('display').value = currentInput;
+                resultDisplayed = true;
+            } else {
+                document.getElementById('display').value = 'Error';
+                currentInput = '';
+                currentOperator = '';
+            }
+        }
+
+        function factorialHelper(n) {
+            if (n === 0 || n === 1) {
+                return 1;
+            }
+            return n * factorialHelper(n - 1);
+        }
+
+        function naturalLogarithm() {
+            currentInput = Math.log(parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+            resultDisplayed = true;
+        }
+
+        function toggleSign() {
+            currentInput = (-parseFloat(currentInput)).toString();
+            document.getElementById('display').value = currentInput;
+        }
     </script>
- 
 </body>
 </html>
+
